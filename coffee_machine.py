@@ -7,52 +7,62 @@ class CoffeeMachine:
 		self.money = 550
 
 	def status(self):
-		print("The coffee machine has:")
+		print("\nThe coffee machine has:")
 		print(str(self.water) + " of water")
 		print(str(self.milk) + " of milk")
 		print(str(self.beans) + " of coffee beans")
 		print(str(self.cups) + " of disposable cups")
 		print("$"+str(self.money) + " of money")
 
+	def reduce_resources(self, water_, milk_, beans_, cost):
+		if self.water - water_ < 0:
+			print("Sorry, not enough water!")
+			return False
+		elif self.milk - milk_ < 0:
+			print("Sorry, not enough milk!")
+			return False
+		elif self.beans - beans_ < 0:
+			print("Sorry, not enough beans!")
+			return False
+		elif self.cups - 1 < 0:
+			print("Sorry, not enough cups!")
+			return False
+		else:
+			self.water -= water_
+			self.milk -= milk_
+			self.beans -= beans_
+			self.cups -= 1
+			self.money += cost
+			return True
+
 	def buy(self):
-		order = int(input("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino: "))
-		if order == 1:
-			self.water -= 250
-			self.beans -= 16
-			self.money += 4
-			self.cups -= 1
-		elif order == 2:
-			self.water -= 350
-			self.milk -= 75
-			self.beans -= 20
-			self.money +=7
-			self.cups -= 1
-		elif order == 3:
-			self.water -= 200
-			self.milk -= 100
-			self.beans -= 12
-			self.money += 6
-			self.cups -= 1
-		print("")
-		self.status()
+		order = input("\nWhat do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino, back - to main menu: \n")
+		res = False
+		if order == '1':
+			res = self.reduce_resources(250, 0, 16, 4)
+		elif order == '2':
+			res = self.reduce_resources(350, 75, 20, 7)
+		elif order == '3':
+			res = self.reduce_resources(200, 100, 12, 6)
+		elif order == 'back':
+			return
+		if res:
+			print("I have enough resources, making you a coffee!")
 
-	def ft_fill(self):
-		self.water += int(input("Write how many ml of water do you want to add: "))
-		self.milk += int(input("Write how many ml of milk do you want to add: "))
-		self.beans += int(input("Write how many grams of coffee beans do you want to add: "))
-		self.cups += int(input("Write how many grams of coffee beans do you want to add: "))
-		print("\n")
-		self.status()
+	def fill(self):
+		self.water += int(input("Write how many ml of water do you want to add: \n"))
+		self.milk += int(input("Write how many ml of milk do you want to add: \n"))
+		self.beans += int(input("Write how many grams of coffee beans do you want to add: \n"))
+		self.cups += int(input("Write how many grams of coffee beans do you want to add: \n"))
 
-	def ft_take(self):
+	def take(self):
 		print("I gave you $" + str(self.money) + '\n')
 		self.money = 0
-		self.status()
 
 
 def ft_user_input(machine):
 	while True:
-		command = input("\nWrite action (buy, fill, take, remaining, exit): ")
+		command = input("\nWrite action (buy, fill, take, remaining, exit): \n")
 		if command == "buy":
 			machine.buy()
 		elif command == "fill":
@@ -67,5 +77,4 @@ def ft_user_input(machine):
 
 if __name__ == '__main__':  # something like main() in C
 	machine = CoffeeMachine()
-	machine.status()
 	ft_user_input(machine)
