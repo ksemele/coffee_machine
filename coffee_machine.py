@@ -53,7 +53,7 @@ class CoffeeMachine:
 		self.water += int(input("Write how many ml of water do you want to add: \n"))
 		self.milk += int(input("Write how many ml of milk do you want to add: \n"))
 		self.beans += int(input("Write how many grams of coffee beans do you want to add: \n"))
-		self.cups += int(input("Write how many grams of coffee beans do you want to add: \n"))
+		self.cups += int(input("Write how many cups do you want to add: \n"))
 
 	def take(self):
 		print("I gave you $" + str(self.money) + '\n')
